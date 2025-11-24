@@ -66,10 +66,10 @@ export const InvestmentForm = () => {
           className="relative flex w-full h-5 items-center"
         >
           <Slider.Track className="bg-muted relative flex-1 h-2 rounded-full">
-            <Slider.Range className="absolute h-full rounded-full bg-gradient-to-r from-primary/70 to-primary" />
+            <Slider.Range className="absolute h-full rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500" />
           </Slider.Track>
           <Slider.Thumb
-            className="block w-4 h-4 bg-primary rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="block size-5 rounded-full bg-white shadow transition-all duration-200 border-2 border-primary hover:scale-110 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           />
         </Slider.Root>
       </div>
@@ -94,15 +94,15 @@ export const InvestmentForm = () => {
           className="relative flex w-full h-5 items-center"
         >
           <Slider.Track className="bg-muted relative flex-1 h-2 rounded-full">
-            <Slider.Range className="absolute h-full rounded-full bg-gradient-to-r from-primary/70 to-primary" />
+            <Slider.Range className="absolute h-full rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500" />
           </Slider.Track>
           <Slider.Thumb
-            className="block w-4 h-4 bg-primary rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="block size-5 rounded-full bg-white shadow transition-all duration-200 border-2 border-primary hover:scale-110 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           />
         </Slider.Root>
       </div>
 
-      <Button type="submit" className="w-full bg-gradient-to-r from-primary/70 to-primary text-white">
+      <Button type="submit" variant="gradient" className="w-full">
         Oblicz
       </Button>
     </form>
