@@ -108,7 +108,7 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
   }; 
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-3 min-[2000px]:space-y-6">
       <div>
         <h2 className="text-2xl font-light text-foreground mb-1">Parametry inwestycji</h2>
       </div>

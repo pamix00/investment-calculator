@@ -21,7 +21,7 @@ export const InvestmentCalculator = () => {
       <div className="max-w-7xl mx-auto">
         
         <div className="text-center mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-b from-pink-500/30 via-purple-500/30 to-indigo-500/30 mb-2">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-b from-pink-500/30 via-purple-500/30 to-indigo-500/30 mb-2 lg:mb-0">
             <Calculator className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-4xl sm:text-5xl font-light text-foreground tracking-tight">
@@ -32,7 +32,11 @@ export const InvestmentCalculator = () => {
           </p>
         </div>
 
-        {finalResult && <InvestmentSummary result={finalResult} />}
+         <div className={`grid transition-[grid-template-rows] duration-700 ease-in-out ${finalResult ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+          <div className="overflow-hidden">
+             {finalResult && <InvestmentSummary result={finalResult} />}
+          </div>
+        </div>
 
         <div className="grid lg:grid-cols-6 gap-8 items-stretch">
 
@@ -46,7 +50,7 @@ export const InvestmentCalculator = () => {
             {results.length > 0 ? (
               <div className="w-full h-full flex flex-col">
                 <div className="mb-6">
-                  <h3 className="text-xl font-semibold flex items-center gap-2">
+                  <h3 className="text-2xl font-light flex items-center">
                     Wzrost wartości inwestycji
                   </h3>
                 </div>
