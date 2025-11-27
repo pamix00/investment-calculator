@@ -40,11 +40,11 @@ export const InvestmentChart = ({ data }: InvestmentChartProps) => {
           <defs>
             <linearGradient id="colorBalance" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.05}/>
             </linearGradient>
             <linearGradient id="colorInvested" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#ec4899" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#ec4899" stopOpacity={0}/>
+              <stop offset="95%" stopColor="#ec4899" stopOpacity={0.05}/>
             </linearGradient>
           </defs>
 
