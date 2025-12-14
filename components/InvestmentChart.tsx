@@ -17,6 +17,40 @@ const formatCurrency = (value: number) => {
 export const InvestmentChart = ({ data }: InvestmentChartProps) => {
   if (!data || data.length === 0) return null;
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const pointData = payload[0].payload;
+      const zysk = pointData.totalBalance - pointData.totalInvested;
+
+      return (
+        <div 
+          className="p-3 border rounded-lg bg-card shadow-lg"
+        >
+          <p className="font-medium text-foreground pb-2 border-b border-border mb-2">{label}</p>
+          
+          <div className="flex justify-between items-center text-sm">
+            <p className="text-primary font-medium mr-4">Całkowita wartość:</p>
+            <p className="font-bold text-foreground">{formatCurrency(pointData.totalBalance)}</p>
+          </div>
+          
+          <div className="flex justify-between items-center text-sm">
+            <p className="text-pink-500 dark:text-pink-400 font-medium mr-4">Wpłacone środki:</p>
+            <p className="text-foreground">{formatCurrency(pointData.totalInvested)}</p>
+          </div>
+
+          <div className="flex justify-between items-center text-sm pt-2 mt-2 border-t border-border">
+            <p className="text-primary font-bold mr-4">Zysk:</p>
+            <p className={`font-bold ${zysk >= 0 ? 'text-primary' : 'text-destructive'}`}>
+              {formatCurrency(zysk)}
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const customTicks = data
     .filter((item, index) => index === 0 || item.year !== data[index - 1].year)
     .map((item) => item.label);
@@ -48,13 +82,13 @@ export const InvestmentChart = ({ data }: InvestmentChartProps) => {
             </linearGradient>
           </defs>
 
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
           
           <XAxis 
             dataKey="label" 
             ticks={customTicks}
             minTickGap={30} 
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, fill: 'var(--foreground)' }}
             tickMargin={10}
             height={50}
             
@@ -68,18 +102,20 @@ export const InvestmentChart = ({ data }: InvestmentChartProps) => {
           
           <YAxis 
             tickFormatter={formatCurrency} 
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, fill: 'var(--foreground)' }}
             width={yAxisWidth}
             tickMargin={10}
           />
           
           <Tooltip 
-            formatter={(value: number) => formatCurrency(value)}
-            labelStyle={{ color: '#111' }}
-            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+            content={<CustomTooltip />}
+            wrapperStyle={{ outline: 'none' }}
           />
           
-          <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: "16px" }}/>
+          <Legend 
+            verticalAlign="bottom" 
+            wrapperStyle={{ paddingTop: "16px", color: 'var(--foreground)' }}
+          />
 
           <Area
             type="monotone"
