@@ -6,6 +6,7 @@ import { InvestmentChart } from './InvestmentChart';
 import { InvestmentSummary } from './InvestmentSummary';
 import { Card } from '@/components/ui/card';
 import { Calculator, TrendingUp } from "lucide-react";
+import { ThemeButton } from './ThemeButton';
 
 export const InvestmentCalculator = () => {
   const [results, setResults] = useState<InvestmentResult[]>([]);
@@ -17,7 +18,10 @@ export const InvestmentCalculator = () => {
   const finalResult = results.length > 0 ? results[results.length - 1] : null;
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8 relative">
+      <div className="absolute top-4 right-4 sm:top-8 sm:right-8">
+        <ThemeButton />
+      </div>
       <div className="max-w-7xl mx-auto">
         
         <div className="text-center mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -33,7 +37,7 @@ export const InvestmentCalculator = () => {
         </div>
 
          <div className={`grid transition-[grid-template-rows] duration-700 ease-in-out ${finalResult ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden p-2 -m-2">
              {finalResult && <InvestmentSummary result={finalResult} />}
           </div>
         </div>
@@ -41,43 +45,47 @@ export const InvestmentCalculator = () => {
         <div className="grid lg:grid-cols-6 gap-8 items-stretch">
 
           {/* Formularz  */}
-          <Card className="lg:col-span-2 p-6 h-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <InvestmentForm onCalculate={handleCalculate} />
-          </Card>
+          <div className="lg:col-span-2 h-full animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <Card className="p-6 h-full">
+              <InvestmentForm onCalculate={handleCalculate} />
+            </Card>
+          </div>
 
           {/* Wykres inwestycji */}
-          <Card className="lg:col-span-4 p-6 flex flex-col justify-center animate-in fade-in slide-in-from-bottom-8 duration-700">
-            {results.length > 0 ? (
-              <div className="w-full h-full flex flex-col">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-light flex items-center">
-                    Wzrost wartości inwestycji
-                  </h3>
-                </div>
-                
-                <div className="flex-1 w-full min-h-[300px] flex flex-col">
-                  <InvestmentChart data={results} />
-                  <div className="mt-4 text-center">
-                    <p className="text-sm text-muted-foreground">
-                      Wykres pokazuje prognozowany wzrost wartości Twojej inwestycji przez {finalResult?.year} lat.
-                    </p>
+          <div className="lg:col-span-4 h-full animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <Card className="p-6 h-full flex flex-col justify-center">
+              {results.length > 0 ? (
+                <div className="w-full h-full flex flex-col">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-light flex items-center">
+                      Wzrost wartości inwestycji
+                    </h3>
+                  </div>
+                  
+                  <div className="flex-1 w-full min-h-[300px] flex flex-col">
+                    <InvestmentChart data={results} />
+                    <div className="mt-4 text-center">
+                      <p className="text-sm text-muted-foreground">
+                        Wykres pokazuje prognozowany wzrost wartości Twojej inwestycji przez {finalResult?.year} lat.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="text-center py-12 m-auto">
-                <div className="bg-gradient-to-b from-pink-500/20 via-purple-500/20 to-indigo-500/20 p-4 rounded-full inline-block mb-4">
-                  <TrendingUp className="w-12 h-12 text-primary" />
+              ) : (
+                <div className="text-center py-12 m-auto">
+                  <div className="bg-gradient-to-b from-pink-500/20 via-purple-500/20 to-indigo-500/20 p-4 rounded-full inline-block mb-4">
+                    <TrendingUp className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-medium text-foreground mb-2">
+                    Brak danych do wyświetlenia
+                  </h3>
+                  <p className="text-muted-foreground max-w-sm mx-auto">
+                    Użyj formularza po lewej stronie, aby zobaczyć wyniki.
+                  </p>
                 </div>
-                <h3 className="text-lg font-medium text-foreground mb-2">
-                  Brak danych do wyświetlenia
-                </h3>
-                <p className="text-muted-foreground max-w-sm mx-auto">
-                  Użyj formularza po lewej stronie, aby zobaczyć wyniki.
-                </p>
-              </div>
-            )}
-          </Card>
+              )}
+            </Card>
+          </div>
         </div>
 
       </div>
