@@ -1,15 +1,17 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { InvestmentForm, InvestmentResult } from './InvestmentForm';
-import { InvestmentChart } from './InvestmentChart';
-import { InvestmentSummary } from './InvestmentSummary';
-import { Card } from '@/components/ui/card';
-import { Calculator, TrendingUp } from "lucide-react";
-import { ThemeButton } from './ThemeButton';
+import { useState } from "react";
+import { InvestmentForm, InvestmentResult } from "./InvestmentForm";
+import { InvestmentChart } from "./InvestmentChart";
+import { InvestmentSummary } from "./InvestmentSummary";
+import { Card } from "@/components/ui/card";
+import { Calculator, ExternalLink, TrendingUp } from "lucide-react";
+import { ThemeButton } from "./ThemeButton";
 
 export const InvestmentCalculator = () => {
   const [results, setResults] = useState<InvestmentResult[]>([]);
+
+  const currentYear = new Date().getFullYear();
 
   const handleCalculate = (data: InvestmentResult[]) => {
     setResults(data);
@@ -23,7 +25,6 @@ export const InvestmentCalculator = () => {
         <ThemeButton />
       </div>
       <div className="max-w-7xl mx-auto">
-        
         <div className="text-center mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-b from-pink-500/30 via-purple-500/30 to-indigo-500/30 mb-2 lg:mb-0">
             <Calculator className="w-8 h-8 text-primary" />
@@ -36,14 +37,17 @@ export const InvestmentCalculator = () => {
           </p>
         </div>
 
-         <div className={`grid transition-[grid-template-rows] duration-700 ease-in-out ${finalResult ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+        <div
+          className={`grid transition-[grid-template-rows] duration-700 ease-in-out ${
+            finalResult ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          }`}
+        >
           <div className="overflow-hidden p-2 -m-2">
-             {finalResult && <InvestmentSummary result={finalResult} />}
+            {finalResult && <InvestmentSummary result={finalResult} />}
           </div>
         </div>
 
         <div className="grid lg:grid-cols-6 gap-8 items-stretch">
-
           {/* Formularz  */}
           <div className="lg:col-span-2 h-full animate-in fade-in slide-in-from-bottom-8 duration-700">
             <Card className="p-6 h-full">
@@ -61,12 +65,13 @@ export const InvestmentCalculator = () => {
                       Wzrost wartości inwestycji
                     </h3>
                   </div>
-                  
+
                   <div className="flex-1 w-full min-h-[300px] flex flex-col">
                     <InvestmentChart data={results} />
                     <div className="mt-4 text-center">
                       <p className="text-sm text-muted-foreground">
-                        Wykres pokazuje prognozowany wzrost wartości Twojej inwestycji przez {finalResult?.year} lat.
+                        Wykres pokazuje prognozowany wzrost wartości Twojej
+                        inwestycji przez {finalResult?.year} lat.
                       </p>
                     </div>
                   </div>
@@ -87,8 +92,31 @@ export const InvestmentCalculator = () => {
             </Card>
           </div>
         </div>
-
       </div>
+
+      <footer className="mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 flex justify-center pb-8">
+        <a
+          href="https://patrykczech.me"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-3 px-5 py-2.5 rounded-full bg-background/50 backdrop-blur-md border border-border/50 shadow-sm hover:shadow-md hover:border-primary/40 transition-all duration-300 hover:-translate-y-0.5"
+        >
+          <span className="text-xs text-muted-foreground/80 font-medium">
+            © {currentYear}
+          </span>
+
+          <span className="w-px h-3.5 bg-border/80" />
+
+          <span className="text-sm flex items-center gap-1.5 text-muted-foreground group-hover:text-foreground transition-colors">
+            Stworzone przez
+            <span className="font-semibold text-foreground underline decoration-primary/40 underline-offset-4 group-hover:decoration-primary group-hover:text-primary transition-all">
+              Patryk Czech
+            </span>
+            <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+          </span>
+        </a>
+        
+      </footer>
     </div>
   );
 };
