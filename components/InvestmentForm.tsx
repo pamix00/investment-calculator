@@ -108,7 +108,7 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
   }; 
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 min-[2000px]:space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-3 min-[2000px]:space-y-6 select-none">
       <div>
         <h2 className="text-2xl font-light text-foreground mb-1">Parametry inwestycji</h2>
       </div>
@@ -158,7 +158,7 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
       <div className="space-y-3">
         <div className="flex justify-between">
           <Label>Oprocentowanie roczne (%)</Label>
-          <span className="text-sm text-primary font-mono font-semibold">{annualRate}%</span>
+          <span className="text-sm text-primary font-mono font-semibold cursor-default select-none">{annualRate}%</span>
         </div>
         <Input
           type="number"
@@ -191,7 +191,7 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
       <div className="space-y-3">
          <div className="flex justify-between">
           <Label>Czas trwania (lata)</Label>
-          <span className="text-sm text-primary font-mono font-semibold">{years} lat</span>
+          <span className="text-sm text-primary font-mono font-semibold cursor-default select-none">{years} lat</span>
         </div>
         <Input
           type="number"

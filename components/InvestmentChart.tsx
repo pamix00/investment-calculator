@@ -60,8 +60,8 @@ export const InvestmentChart = ({ data }: InvestmentChartProps) => {
   const yAxisWidth = Math.max(80, formattedMax.length * 6 + 10);
 
   return (
-    <div className="h-full min-h-[300px] w-full">
-      <ResponsiveContainer width="100%" height="100%">
+    <div className="h-full min-h-[300px] w-full [&_.recharts-surface]:outline-none [&_*:focus]:outline-none">
+      <ResponsiveContainer width="100%" height="100%" className="">
         <AreaChart
           data={data}
           margin={{

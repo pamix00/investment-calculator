@@ -20,12 +20,12 @@ export const InvestmentCalculator = () => {
   const finalResult = results.length > 0 ? results[results.length - 1] : null;
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8 relative selection:bg-primary selection:text-primary-foreground">
       <div className="absolute top-4 right-4 sm:top-8 sm:right-8">
         <ThemeButton />
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div className="text-center mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700 cursor-default select-none">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-b from-pink-500/30 via-purple-500/30 to-indigo-500/30 mb-2 lg:mb-0">
             <Calculator className="w-8 h-8 text-primary" />
           </div>
@@ -56,7 +56,7 @@ export const InvestmentCalculator = () => {
           </div>
 
           {/* Wykres inwestycji */}
-          <div className="lg:col-span-4 h-full animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="lg:col-span-4 h-full animate-in fade-in slide-in-from-bottom-8 duration-700 select-none">
             <Card className="p-6 h-full flex flex-col justify-center">
               {results.length > 0 ? (
                 <div className="w-full h-full flex flex-col">
@@ -66,7 +66,7 @@ export const InvestmentCalculator = () => {
                     </h3>
                   </div>
 
-                  <div className="flex-1 w-full min-h-[300px] flex flex-col">
+                  <div className="flex-1 w-full min-h-[300px] flex flex-col cursor-default">
                     <InvestmentChart data={results} />
                     <div className="mt-4 text-center">
                       <p className="text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ export const InvestmentCalculator = () => {
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-12 m-auto">
+                <div className="text-center py-12 m-auto select-none">
                   <div className="bg-gradient-to-b from-pink-500/20 via-purple-500/20 to-indigo-500/20 p-4 rounded-full inline-block mb-4">
                     <TrendingUp className="w-12 h-12 text-primary" />
                   </div>
@@ -94,7 +94,7 @@ export const InvestmentCalculator = () => {
         </div>
       </div>
 
-      <footer className="mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400 fill-mode-both flex justify-center pb-8">
+      <footer className="mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400 fill-mode-both flex justify-center pb-8 select-none">
         <a
           href="https://patrykczech.me"
           target="_blank"
