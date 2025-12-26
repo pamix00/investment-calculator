@@ -94,7 +94,7 @@ export const InvestmentCalculator = () => {
         </div>
       </div>
 
-      <footer className="mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 flex justify-center pb-8">
+      <footer className="mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400 fill-mode-both flex justify-center pb-8">
         <a
           href="https://patrykczech.me"
           target="_blank"
