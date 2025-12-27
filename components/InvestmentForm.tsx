@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -31,10 +31,19 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
   const [initialAmount, setInitialAmount] = useState(10000);
   const [contributionAmount, setContributionAmount] = useState(500);
   const [contributionFrequency, setContributionFrequency] = useState<'monthly' | 'yearly'>('monthly');
+  
   const [annualRate, setAnnualRate] = useState(7);
-  const [years, setYears] = useState(20);
+  const [committedAnnualRate, setCommittedAnnualRate] = useState(7);
 
-  const calculateResults = () => {
+  const [years, setYears] = useState(20);
+  const [committedYears, setCommittedYears] = useState(20);
+  
+  const [hasCalculated, setHasCalculated] = useState(false);
+
+  const calculateResults = useCallback(() => {
+    const calcYears = committedYears;
+    const calcRate = committedAnnualRate;
+
     const results: InvestmentResult[] = [];
     let currentBalance = initialAmount;
     let totalInvested = initialAmount;
@@ -44,8 +53,8 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
 
     const isMonthly = contributionFrequency === 'monthly';
     const periodsPerYear = isMonthly ? 12 : 1;
-    const totalPeriods = years * periodsPerYear;
-    const ratePerPeriod = (annualRate / 100) / periodsPerYear;
+    const totalPeriods = calcYears * periodsPerYear;
+    const ratePerPeriod = (calcRate / 100) / periodsPerYear;
 
     let startLabel = 'Rok inwestowania: 0';
     if (isMonthly) {
@@ -100,11 +109,22 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
     if (onCalculate) {
       onCalculate(results);
     }
-  };
+    
+  }, [initialAmount, contributionAmount, contributionFrequency, committedAnnualRate, committedYears]); 
+
+
+  useEffect(() => {
+    if (hasCalculated) {
+      calculateResults();
+    }
+  }, [calculateResults, hasCalculated]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    calculateResults();
+    setCommittedYears(years);
+    setCommittedAnnualRate(annualRate);
+    
+    setHasCalculated(true);
   }; 
 
   return (
@@ -113,7 +133,6 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
         <h2 className="text-2xl font-light text-foreground mb-1">Parametry inwestycji</h2>
       </div>
 
-      {/* Kwota początkowa */}
       <div className="space-y-3">
         <Label>Kwota początkowa (PLN)</Label>
         <Input
@@ -125,7 +144,6 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
         />
       </div>
 
-      {/* Dopłata */}
       <div className="space-y-3">
         <Label>Wysokość dopłaty (PLN)</Label>
         <Input
@@ -137,7 +155,6 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
         />
       </div>
 
-      {/* Częstotliwość dopłaty */}
       <div className="space-y-3">
         <Label>Częstotliwość dopłaty</Label>
         <Select 
@@ -166,7 +183,11 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
           value={annualRate}
           onChange={(e) => {
             const val = Number(e.target.value);
-            if (!isNaN(val)) setAnnualRate(Math.min(Math.max(val, 0), 20));
+            if (!isNaN(val)) {
+                const clamped = Math.min(Math.max(val, 0), 20);
+                setAnnualRate(clamped);
+                setCommittedAnnualRate(clamped);
+            }
           }}
           className="mb-2"
         />
@@ -176,6 +197,7 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
           max={20}
           step={0.1}
           onValueChange={(v) => setAnnualRate(v[0])}
+          onValueCommit={(v) => setCommittedAnnualRate(v[0])}
           className="relative flex w-full h-5 items-center touch-none select-none cursor-pointer"
         >
           <Slider.Track className="bg-secondary relative flex-1 h-2 rounded-full overflow-hidden">
@@ -198,7 +220,11 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
           value={years}
           onChange={(e) => {
             const val = Number(e.target.value);
-            if (!isNaN(val)) setYears(Math.min(Math.max(val, 1), 50));
+            if (!isNaN(val)) {
+                const clamped = Math.min(Math.max(val, 1), 50);
+                setYears(clamped);
+                setCommittedYears(clamped);
+            }
           }}
            className="mb-2"
         />
@@ -208,6 +234,7 @@ export const InvestmentForm = ({ onCalculate }: InvestmentFormProps) => {
           max={50}
           step={1}
           onValueChange={(v) => setYears(v[0])}
+          onValueCommit={(v) => setCommittedYears(v[0])}
           className="relative flex w-full h-5 items-center touch-none select-none cursor-pointer"
         >
           <Slider.Track className="bg-secondary relative flex-1 h-2 rounded-full overflow-hidden">
